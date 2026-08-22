@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diaa Sanocy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --gold: #b8941f;
+            --gold-light: #d4a843;
+            --gold-dark: #8a6d1f;
+            --bg-dark: #0a0a0a;
+            --text-light: #f0f0f0;
+            --text-muted: #bbbbbb;
+            --card-bg: rgba(184, 148, 31, 0.85);
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ===== LANDING PAGE ===== */
+        #landing {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            cursor: pointer;
+            transition: opacity 1.2s ease, visibility 1.2s ease;
+        }
+
+        #landing.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .click-here {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-weight: 300;
+            font-size: 1.8rem;
+            color: var(--gold);
+            letter-spacing: 0.08em;
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        /* ===== MAIN PAGE ===== */
+        #main {
+            opacity: 0;
+            transition: opacity 1.5s ease;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        #main.visible {
+            opacity: 1;
+        }
+
+        /* Background Video */
+        .bg-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            opacity: 0.4;
+        }
+
+        .bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                rgba(10, 10, 10, 0.3) 0%,
+                rgba(10, 10, 10, 0.6) 50%,
+                rgba(10, 10, 10, 0.9) 100%
+            );
+            z-index: -1;
+        }
+
+        /* Content */
+        .content {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 60px 30px 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .name-group {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+        }
+
+        .name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.5rem;
+            font-weight: 400;
+            color: var(--gold);
+            letter-spacing: 0.02em;
+            line-height: 1;
+        }
+
+        .nickname {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            font-weight: 300;
+            font-style: italic;
+            color: var(--gold-light);
+            opacity: 0.8;
+        }
+
+        .nav {
+            display: flex;
+            gap: 20px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+        }
+
+        .nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .nav a:hover,
+        .nav a.active {
+            color: var(--gold);
+        }
+
+        .nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: var(--gold);
+        }
+
+        /* Field */
+        .field-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 30px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--text-light);
+        }
+
+        .field-row .pin {
+            color: var(--gold);
+            font-size: 0.8rem;
+        }
+
+        .flag {
+            width: 16px;
+            height: 12px;
+            border-radius: 2px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        /* Bio */
+        .bio {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.15rem;
+            font-weight: 400;
+            line-height: 1.7;
+            color: #f5f5f5;
+            max-width: 550px;
+            margin-bottom: 50px;
+        }
+
+        /* Section Label */
+        .section-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.6rem;
+            font-weight: 600;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            opacity: 0.7;
+        }
+
+        /* Current Obsession Card */
+        .obsession-card {
+            background: var(--card-bg);
+            border-radius: 4px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            max-width: 400px;
+            margin-bottom: 50px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none;
+        }
+
+        .obsession-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(184, 148, 31, 0.2);
+        }
+
+        .obsession-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .obsession-info h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #1a1a1a;
+            margin-bottom: 2px;
+        }
+
+        .obsession-info p {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            color: rgba(26, 26, 26, 0.7);
+            font-weight: 500;
+        }
+
+        /* Find Me Section */
+        .find-me-section {
+            margin-bottom: 40px;
+        }
+
+        .social-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            text-decoration: none;
+            color: var(--text-light);
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .social-link:hover {
+            color: var(--gold);
+            padding-left: 8px;
+        }
+
+        .social-link svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+            opacity: 0.7;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding-top: 30px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            opacity: 0.5;
+        }
+
+        /* ===== CV PAGE ===== */
+        #cv-page {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+            min-height: 100vh;
+            position: relative;
+            z-index: 1;
+        }
+
+        #cv-page.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .cv-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 40px 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cv-header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid rgba(184, 148, 31, 0.2);
+        }
+
+        .cv-header h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.2rem;
+            font-weight: 400;
+            color: var(--gold);
+            margin-bottom: 8px;
+            letter-spacing: 0.03em;
+        }
+
+        .cv-header .cv-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 400;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .cv-section {
+            margin-bottom: 40px;
+        }
+
+        .cv-section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.45rem;
+            font-weight: 500;
+            color: var(--gold);
+            margin-bottom: 20px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(184, 148, 31, 0.15);
+            letter-spacing: 0.05em;
+        }
+
+        .cv-item {
+            margin-bottom: 24px;
+            padding-left: 20px;
+            border-left: 2px solid rgba(184, 148, 31, 0.2);
+        }
+
+        .cv-item h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.15rem;
+            font-weight: 500;
+            color: var(--text-light);
+            margin-bottom: 4px;
+        }
+
+        .cv-item .cv-date {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            color: var(--gold);
+            letter-spacing: 0.1em;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .cv-item p {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.05rem;
+            font-weight: 400;
+            line-height: 1.7;
+            color: #cccccc;
+        }
+
+        .cv-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .cv-skill {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--gold);
+            border: 1px solid rgba(184, 148, 31, 0.3);
+            padding: 6px 16px;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .cv-skill:hover {
+            background: rgba(184, 148, 31, 0.1);
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--gold);
+            text-decoration: none;
+            margin-bottom: 30px;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+            background: none;
+            border: none;
+        }
+
+        .back-btn:hover {
+            opacity: 0.7;
+        }
+
+        /* ===== AUDIO CONTROL ===== */
+        .audio-control-wrapper {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(184, 148, 31, 0.3);
+            border-radius: 30px;
+            padding: 8px 16px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .audio-control-wrapper:hover {
+            background: rgba(0, 0, 0, 0.8);
+            border-color: var(--gold);
+        }
+
+        .audio-btn {
+            background: none;
+            border: none;
+            color: var(--gold);
+            font-size: 1.1rem;
+            cursor: pointer;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .volume-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 80px;
+            height: 3px;
+            background: rgba(184, 148, 31, 0.2);
+            border-radius: 2px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 10px;
+            height: 10px;
+            background: var(--gold);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .volume-slider::-moz-range-thumb {
+            width: 10px;
+            height: 10px;
+            background: var(--gold);
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+        }
+
+        .volume-value {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65rem;
+            color: var(--gold);
+            min-width: 28px;
+            text-align: right;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .name {
+                font-size: 2.5rem;
+            }
+            .bio {
+                font-size: 1rem;
+            }
+            .cv-content {
+                padding: 40px 20px;
+            }
+            .cv-header h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+
+    <!-- ===== LANDING PAGE ===== -->
+    <div id="landing">
+        <span class="click-here">Click here..</span>
+    </div>
+
+    <!-- Background Video -->
+    <video class="bg-video" id="bgVideo" autoplay loop playsinline>
+        <source src="bg.mp4" type="video/mp4">
+    </video>
+    <div class="bg-overlay"></div>
+
+    <!-- ===== MAIN PAGE ===== -->
+    <div id="main">
+        <div class="content">
+            <!-- Header -->
+            <div class="header">
+                <div class="name-group">
+                    <h1 class="name">Diaa</h1>
+                    <span class="nickname">Sanocy</span>
+                </div>
+                <nav class="nav">
+                    <a class="active">Home</a>
+                </nav>
+            </div>
+
+            <!-- Field -->
+            <div class="field-row">
+                <span>Accounting</span>
+                <span class="pin">📍</span>
+                <span class="flag" style="background: linear-gradient(to bottom, #ce1126 33.33%, #fff 33.33%, #fff 66.66%, #000 66.66%);"></span>
+            </div>
+
+            <!-- Bio -->
+            <p class="bio">
+                Once in a lifetime, a person pours themselves out with such intensity; 
+                thereafter, they become forever indifferent to everything.
+            </p>
+
+            <!-- Current Obsession -->
+            <div class="section-label">Current Obsession</div>
+            <div class="obsession-card" onclick="showCV()">
+                <div class="obsession-icon">🦁</div>
+                <div class="obsession-info">
+                    <h3>Check me</h3>
+                    <p>My CV</p>
+                </div>
+            </div>
+
+            <!-- Find Me -->
+            <div class="find-me-section">
+                <div class="section-label">Find Me</div>
+                <div class="social-links">
+                    <a href="https://discord.com/users/xx_evan_xx" target="_blank" class="social-link">
+                        <svg viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+                        Discord
+                    </a>
+                    <a href="https://t.me/DiaaSanocy" target="_blank" class="social-link">
+                        <svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                        Telegram
+                    </a>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="footer">
+                diaasanocy.me
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== CV PAGE ===== -->
+    <div id="cv-page">
+        <div class="cv-content">
+            <button class="back-btn" onclick="showHome()">
+                ← Back to Home
+            </button>
+
+            <div class="cv-header">
+                <h1>Diaa Sanocy</h1>
+                <span class="cv-title">Senior Accountant & Inventory Manager</span>
+            </div>
+
+            <div class="cv-section">
+                <h3 class="cv-section-title">Professional Summary</h3>
+                <div class="cv-item" style="border-left: none; padding-left: 0;">
+                    <p>
+                        Results-driven accountant with 2+ years in cost accounting and inventory management. 
+                        Expert in warehouse operations, cost analysis, and ERP systems.
+                    </p>
+                </div>
+            </div>
+
+            <div class="cv-section">
+                <h3 class="cv-section-title">Work Experience</h3>
+
+                <div class="cv-item">
+                    <h4>Senior Accountant & Store Manager</h4>
+                    <span class="cv-date">2024 — Present</span>
+                    <p>
+                        Oversee cost accounting, inventory valuation, and warehouse management. 
+                        Lead a team of 5 and maintain accurate stock tracking.
+                    </p>
+                </div>
+
+                <div class="cv-item">
+                    <h4>Cost Accountant</h4>
+                    <span class="cv-date">2023 — 2024</span>
+                    <p>
+                        Cost analysis and budgeting. Cost reporting, variance analysis, 
+                        and process optimization.
+                    </p>
+                </div>
+            </div>
+
+            <div class="cv-section">
+                <h3 class="cv-section-title">Core Competencies</h3>
+                <div class="cv-skills">
+                    <span class="cv-skill">Cost Accounting</span>
+                    <span class="cv-skill">Inventory Management</span>
+                    <span class="cv-skill">Warehouse Operations</span>
+                    <span class="cv-skill">Financial Reporting</span>
+                    <span class="cv-skill">Budgeting & Forecasting</span>
+                    <span class="cv-skill">Variance Analysis</span>
+                    <span class="cv-skill">ERP Systems</span>
+                    <span class="cv-skill">Stock Control</span>
+                    <span class="cv-skill">Audit Preparation</span>
+                    
+                </div>
+            </div>
+
+            <div class="cv-section">
+                <h3 class="cv-section-title">Technical Skills</h3>
+                <div class="cv-item" style="border-left: none; padding-left: 0;">
+                    <p>
+                        QuickBooks · SAP · Oracle ERP · Microsoft Dynamics · Tally · 
+                        Power BI · SQL · Financial Modeling · IFRS · GAAP
+                    </p>
+                </div>
+            </div>
+
+            <div class="cv-section">
+                <h3 class="cv-section-title">Education</h3>
+                <div class="cv-item">
+                    <h4>Bachelor of Commerce — Accounting</h4>
+                    <span class="cv-date">2019 — 2023</span>
+                    <p>
+                        Financial accounting, managerial accounting, and business law.
+                    </p>
+                </div>
+            </div>
+
+            <div class="cv-section">
+                <h3 class="cv-section-title">Certifications</h3>
+                <div class="cv-item" style="border-left: none; padding-left: 0;">
+                    <p>
+                        IFRS Certified · PFA (Professional Financial Accountant)
+                    </p>
+                </div>
+            </div>
+
+            <div class="footer" style="margin-top: 60px;">
+                diaasanocy.me · Professional Portfolio
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== AUDIO CONTROL ===== -->
+    <div class="audio-control-wrapper">
+        <button class="audio-btn" id="audioBtn">♪</button>
+        <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="30">
+        <span class="volume-value" id="volumeValue">30%</span>
+    </div>
+
+    <script>
+        const landing = document.getElementById('landing');
+        const main = document.getElementById('main');
+        const cvPage = document.getElementById('cv-page');
+        const bgVideo = document.getElementById('bgVideo');
+        const audioBtn = document.getElementById('audioBtn');
+        const volumeSlider = document.getElementById('volumeSlider');
+        const volumeValue = document.getElementById('volumeValue');
+        let isPlaying = false;
+
+        // Landing click
+        landing.addEventListener('click', () => {
+            landing.classList.add('hidden');
+            main.classList.add('visible');
+
+            bgVideo.volume = 0.3;
+            bgVideo.play().then(() => {
+                isPlaying = true;
+                audioBtn.textContent = '♫';
+            }).catch(() => {
+                isPlaying = false;
+                bgVideo.muted = true;
+                bgVideo.play();
+                audioBtn.textContent = '♪';
+            });
+        });
+
+        // Show CV page
+        function showCV() {
+            main.style.display = 'none';
+            cvPage.style.display = 'block';
+            setTimeout(() => cvPage.classList.add('active'), 10);
+            window.scrollTo(0, 0);
+        }
+
+        // Show Home page
+        function showHome() {
+            cvPage.classList.remove('active');
+            setTimeout(() => {
+                cvPage.style.display = 'none';
+                main.style.display = 'block';
+            }, 300);
+            window.scrollTo(0, 0);
+        }
+
+        // Audio toggle
+        audioBtn.addEventListener('click', () => {
+            if (isPlaying) {
+                bgVideo.muted = true;
+                audioBtn.textContent = '♪';
+            } else {
+                bgVideo.muted = false;
+                audioBtn.textContent = '♫';
+            }
+            isPlaying = !isPlaying;
+        });
+
+        // Volume slider
+        volumeSlider.addEventListener('input', (e) => {
+            const val = e.target.value;
+            bgVideo.volume = val / 100;
+            volumeValue.textContent = val + '%';
+            if (val > 0 && bgVideo.muted) {
+                bgVideo.muted = false;
+                isPlaying = true;
+                audioBtn.textContent = '♫';
+            }
+        });
+    </script>
+
+</body>
+</html>
