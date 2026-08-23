@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diaa Sanocy</title>
+    <meta name="description" content="Diaa Sanocy — Accountant &amp; Inventory Manager. Personal portfolio and CV.">
+    <meta property="og:title" content="Diaa Sanocy">
+    <meta property="og:description" content="Accountant &amp; Inventory Manager — personal portfolio and CV.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://diaasanocy.me/">
+    <meta property="og:image" content="https://diaasanocy.me/og-image.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Diaa Sanocy">
+    <meta name="twitter:description" content="Accountant & Inventory Manager — personal portfolio and CV.">
+    <meta name="twitter:image" content="https://diaasanocy.me/og-image.jpg">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230a0a0a'/%3E%3Ctext x='50' y='70' font-family='Georgia, serif' font-size='58' fill='%23b8941f' text-anchor='middle'%3ED%3C/text%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&family=Amiri:ital,wght@0,400;0,700;1,400&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --gold: #b8941f;
+            --gold-light: #d4a843;
+            --gold-dark: #8a6d1f;
+            --bg-dark: #0a0a0a;
+            --text-light: #f0f0f0;
+            --text-muted: #bbbbbb;
+            --card-bg: rgba(184, 148, 31, 0.85);
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ===== LANDING PAGE ===== */
+        #landing {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            cursor: pointer;
+            transition: opacity 1.2s ease, visibility 1.2s ease;
+        }
+
+        #landing.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .click-here {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-weight: 300;
+            font-size: 1.8rem;
+            color: var(--gold);
+            letter-spacing: 0.08em;
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        /* ===== MAIN PAGE ===== */
+        #main {
+            opacity: 0;
+            transition: opacity 1.5s ease;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        #main.visible {
+            opacity: 1;
+        }
+
+        /* Background Video */
+        .bg-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            opacity: 0.4;
+        }
+
+        .bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                rgba(10, 10, 10, 0.3) 0%,
+                rgba(10, 10, 10, 0.6) 50%,
+                rgba(10, 10, 10, 0.9) 100%
+            );
+            z-index: -1;
+        }
+
+        /* Content */
+        .content {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 60px 30px 40px;
+            position: relative;
+            z-index: 1;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='none' stroke='%23b8941f' stroke-width='1' opacity='0.07'%3E%3Cpath d='M40 0 L80 40 L40 80 L0 40 Z'/%3E%3Cpath d='M40 18 L62 40 L40 62 L18 40 Z'/%3E%3C/g%3E%3C/svg%3E");
+            background-repeat: repeat;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .name-group {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+        }
+
+        .name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.5rem;
+            font-weight: 400;
+            color: var(--gold);
+            letter-spacing: 0.02em;
+            line-height: 1;
+        }
+
+        .nickname {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            font-weight: 300;
+            font-style: italic;
+            color: var(--gold-light);
+            opacity: 0.8;
+        }
+
+        .nav {
+            display: flex;
+            gap: 20px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .nav a:hover,
+        .nav a.active {
+            color: var(--gold);
+        }
+
+        .nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: var(--gold);
+        }
+
+        /* Field */
+        .field-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 30px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--text-light);
+        }
+
+        .field-row .pin {
+            color: var(--gold);
+            font-size: 0.8rem;
+        }
+
+        .flag {
+            width: 16px;
+            height: 12px;
+            border-radius: 2px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        /* Bio Carousel */
+        .bio-carousel {
+            position: relative;
+            max-width: 550px;
+            min-height: 90px;
+            margin-bottom: 12px;
+        }
+
+        .bio-slide {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.15rem;
+            font-weight: 400;
+            line-height: 1.7;
+            color: #f5f5f5;
+            white-space: pre-line;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        .bio-slide.active {
+            opacity: 1;
+        }
+
+        .bio-dots {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 40px;
+        }
+
+        .bio-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: rgba(184, 148, 31, 0.3);
+            transition: background 0.4s ease, width 0.4s ease;
+        }
+
+        .bio-dot.active {
+            background: var(--gold);
+            width: 14px;
+            border-radius: 3px;
+        }
+
+        /* Section Label */
+        .section-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.6rem;
+            font-weight: 600;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            opacity: 0.7;
+        }
+
+        /* Current Obsession Card */
+        .obsession-card {
+            position: relative;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='16' viewBox='0 0 28 16'%3E%3Cpath d='M0 8 L14 0 L28 8 L14 16 Z' fill='none' stroke='%238a6d1f' stroke-width='1' opacity='0.3'/%3E%3C/svg%3E"), linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 55%, var(--gold-dark) 100%);
+            background-repeat: repeat, no-repeat;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 10px;
+            padding: 18px 22px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            max-width: 400px;
+            margin-bottom: 50px;
+            cursor: pointer;
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none;
+        }
+
+        .obsession-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(184, 148, 31, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+        }
+
+        .obsession-icon {
+            width: 52px;
+            height: 52px;
+            background: radial-gradient(circle at 35% 30%, rgba(0, 0, 0, 0.22), rgba(0, 0, 0, 0.42));
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .obsession-arrow {
+            margin-inline-start: auto;
+            color: rgba(26, 26, 26, 0.4);
+            font-size: 1.3rem;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+
+        .obsession-info h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #1a1a1a;
+            margin-bottom: 2px;
+        }
+
+        .obsession-info p {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            color: rgba(26, 26, 26, 0.7);
+            font-weight: 500;
+        }
+
+        /* Find Me Section */
+        .find-me-section {
+            margin-bottom: 40px;
+        }
+
+        .social-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            text-decoration: none;
+            color: var(--text-light);
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .social-link:hover {
+            color: var(--gold);
+            padding-left: 8px;
+        }
+
+        .social-link svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+            opacity: 0.7;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding-top: 30px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            opacity: 0.5;
+        }
+
+        /* ===== CV PAGE ===== */
+        #cv-page {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+            min-height: 100vh;
+            position: relative;
+            z-index: 1;
+        }
+
+        #cv-page.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .cv-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 40px 40px;
+            position: relative;
+            z-index: 1;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='none' stroke='%23b8941f' stroke-width='1' opacity='0.07'%3E%3Cpath d='M40 0 L80 40 L40 80 L0 40 Z'/%3E%3Cpath d='M40 18 L62 40 L40 62 L18 40 Z'/%3E%3C/g%3E%3C/svg%3E");
+            background-repeat: repeat;
+        }
+
+        .cv-header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-bottom: 10px;
+        }
+
+        .geo-divider {
+            height: 16px;
+            margin-top: 16px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='16' viewBox='0 0 28 16'%3E%3Cpath d='M0 8 L14 0 L28 8 L14 16 Z' fill='none' stroke='%23b8941f' stroke-width='1.3' opacity='0.55'/%3E%3C/svg%3E");
+            background-repeat: repeat-x;
+            background-position: center;
+        }
+
+        .cv-header h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.2rem;
+            font-weight: 400;
+            color: var(--gold);
+            margin-bottom: 8px;
+            letter-spacing: 0.03em;
+        }
+
+        .cv-header .cv-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 400;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .cv-section {
+            margin-bottom: 40px;
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .cv-section.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .cv-section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.45rem;
+            font-weight: 500;
+            color: var(--gold);
+            margin-bottom: 20px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(184, 148, 31, 0.15);
+            letter-spacing: 0.05em;
+        }
+
+        .cv-item {
+            margin-bottom: 24px;
+            padding-left: 20px;
+            border-left: 2px solid rgba(184, 148, 31, 0.2);
+        }
+
+        .cv-item h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.15rem;
+            font-weight: 500;
+            color: var(--text-light);
+            margin-bottom: 4px;
+        }
+
+        .cv-item .cv-date {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            color: var(--gold);
+            letter-spacing: 0.1em;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .cv-item p {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.05rem;
+            font-weight: 400;
+            line-height: 1.7;
+            color: #cccccc;
+        }
+
+        .cv-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .cv-skill {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--gold);
+            border: 1px solid rgba(184, 148, 31, 0.3);
+            padding: 6px 16px;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .cv-skill:hover {
+            background: rgba(184, 148, 31, 0.1);
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--gold);
+            text-decoration: none;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+            background: none;
+            border: none;
+        }
+
+        .cv-top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+
+        .lang-toggle-btn {
+            display: inline-flex;
+            align-items: center;
+            font-family: 'Tajawal', 'Inter', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--gold);
+            background: none;
+            border: 1px solid rgba(184, 148, 31, 0.4);
+            border-radius: 20px;
+            padding: 6px 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .lang-toggle-btn:hover {
+            background: rgba(184, 148, 31, 0.1);
+            border-color: var(--gold);
+        }
+
+        .back-btn:hover {
+            opacity: 0.7;
+        }
+
+        /* ===== ACCESSIBILITY ===== */
+        .obsession-card:focus-visible {
+            outline: 2px solid var(--gold);
+            outline-offset: 4px;
+        }
+
+        #landing:focus-visible {
+            outline: 2px solid var(--gold);
+            outline-offset: -8px;
+        }
+
+        /* ===== ARABIC / RTL CV MODE ===== */
+        .cv-item-plain {
+            border-left: none;
+            padding-left: 0;
+        }
+
+        #cv-page.lang-ar {
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        #cv-page.lang-ar h4,
+        #cv-page.lang-ar .cv-section-title {
+            font-family: 'Amiri', serif;
+        }
+
+        #cv-page.lang-ar .cv-title,
+        #cv-page.lang-ar .cv-date,
+        #cv-page.lang-ar .cv-skill,
+        #cv-page.lang-ar .cv-item p,
+        #cv-page.lang-ar .back-btn,
+        #cv-page.lang-ar .footer {
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        #cv-page.lang-ar .cv-item {
+            border-left: none;
+            border-right: 2px solid rgba(184, 148, 31, 0.2);
+            padding-left: 0;
+            padding-right: 20px;
+        }
+
+        #cv-page.lang-ar .cv-item-plain {
+            border-right: none;
+            padding-right: 0;
+        }
+
+        #main.lang-ar {
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        #main.lang-ar .nav a,
+        #main.lang-ar .field-row,
+        #main.lang-ar .section-label,
+        #main.lang-ar .obsession-info h3,
+        #main.lang-ar .obsession-info p,
+        #main.lang-ar .social-link {
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        #main.lang-ar .bio-slide {
+            font-family: 'Amiri', serif;
+        }
+
+        #main.lang-ar .social-link:hover {
+            padding-left: 0;
+            padding-right: 8px;
+        }
+
+        /* ===== AUDIO CONTROL ===== */
+        .audio-control-wrapper {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(184, 148, 31, 0.3);
+            border-radius: 30px;
+            padding: 8px 16px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .audio-control-wrapper:hover {
+            background: rgba(0, 0, 0, 0.8);
+            border-color: var(--gold);
+        }
+
+        .audio-btn {
+            background: none;
+            border: none;
+            color: var(--gold);
+            font-size: 1.1rem;
+            cursor: pointer;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .volume-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 80px;
+            height: 3px;
+            background: rgba(184, 148, 31, 0.2);
+            border-radius: 2px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 10px;
+            height: 10px;
+            background: var(--gold);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .volume-slider::-moz-range-thumb {
+            width: 10px;
+            height: 10px;
+            background: var(--gold);
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+        }
+
+        .volume-value {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65rem;
+            color: var(--gold);
+            min-width: 28px;
+            text-align: right;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .name {
+                font-size: 2.5rem;
+            }
+            .header {
+                flex-wrap: wrap;
+                row-gap: 10px;
+            }
+            .lang-toggle-btn {
+                font-size: 0.62rem;
+                padding: 5px 12px;
+            }
+            .bio-slide {
+                font-size: 1rem;
+            }
+            .cv-content {
+                padding: 40px 20px;
+            }
+            .cv-header h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+
+    <!-- ===== LANDING PAGE ===== -->
+    <div id="landing" tabindex="0" role="button" aria-label="Enter site">
+        <span class="click-here">Click here..</span>
+    </div>
+
+    <!-- Background Video -->
+    <video class="bg-video" id="bgVideo" autoplay loop playsinline>
+        <source src="bg.mp4" type="video/mp4">
+    </video>
+    <div class="bg-overlay"></div>
+
+    <!-- ===== MAIN PAGE ===== -->
+    <div id="main">
+        <div class="content">
+            <!-- Header -->
+            <div class="header">
+                <div class="name-group">
+                    <h1 class="name">Diaa</h1>
+                    <span class="nickname">Sanocy</span>
+                </div>
+                <div class="header-right">
+                    <nav class="nav">
+                        <a class="active" data-en="Home" data-ar="الرئيسية">Home</a>
+                    </nav>
+                    <button class="lang-toggle-btn" id="homeLangToggleBtn" onclick="toggleLang()">العربية</button>
+                </div>
+            </div>
+
+            <!-- Field -->
+            <div class="field-row">
+                <span data-en="Accounting" data-ar="محاسبة">Accounting</span>
+                <span class="pin">📍</span>
+                <span class="flag" style="background: linear-gradient(to bottom, #ce1126 33.33%, #fff 33.33%, #fff 66.66%, #000 66.66%);"></span>
+            </div>
+
+            <!-- Bio -->
+            <div class="bio-carousel" id="bioCarousel">
+                <p class="bio-slide active" data-en="Once in a lifetime, a person pours themselves out with such intensity; thereafter, they become forever indifferent to everything." data-ar="مرة واحدة في العمر، يفرغ الإنسان كل ما بداخله بهذا الزخم؛ وبعدها يصير غير مبالٍ بكل شيء إلى الأبد.">
+                    Once in a lifetime, a person pours themselves out with such intensity; 
+                    thereafter, they become forever indifferent to everything.
+                </p>
+                <p class="bio-slide" data-en="I complain to the sea of my restless thoughts, and it answers me with its raging winds —&#10;resting upon a deaf rock, how I wish my heart were as unfeeling as that silent stone." data-ar="شاكٍ إلى البحر اضطراب خواطري فيُجيبني برياحه الهوجاءِ&#10;ثاوٍ على صخر أصمٍ وليت لي قلبًا كهذي الصخرة الصماءِ">I complain to the sea of my restless thoughts, and it answers me with its raging winds —&#10;resting upon a deaf rock, how I wish my heart were as unfeeling as that silent stone.</p>
+                <p class="bio-slide" data-en="The bird dances — slaughtered — from the sheer intensity of the pain." data-ar="يرقص الطير مذبوحًا من شدة الألم">The bird dances — slaughtered — from the sheer intensity of the pain.</p>
+            </div>
+            <div class="bio-dots" id="bioDots">
+                <span class="bio-dot active"></span>
+                <span class="bio-dot"></span>
+                <span class="bio-dot"></span>
+            </div>
+
+            <!-- Current Obsession -->
+            <div class="section-label" data-en="Current Obsession" data-ar="شغلي الشاغل">Current Obsession</div>
+            <div class="obsession-card" onclick="showCV()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();showCV();}" tabindex="0" role="button" aria-label="View CV">
+                <div class="obsession-icon">🦁</div>
+                <div class="obsession-info">
+                    <h3 data-en="Check me" data-ar="شوف كده">Check me</h3>
+                    <p data-en="My CV" data-ar="سيرتي الذاتية">My CV</p>
+                </div>
+                <span class="obsession-arrow">›</span>
+            </div>
+
+            <!-- Find Me -->
+            <div class="find-me-section">
+                <div class="section-label" data-en="Find Me" data-ar="لاقيني">Find Me</div>
+                <div class="social-links">
+                    <a href="https://discord.com/users/xx_evan_xx" target="_blank" class="social-link">
+                        <svg viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+                        Discord
+                    </a>
+                    <a href="https://t.me/DiaaSanocy" target="_blank" class="social-link">
+                        <svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                        Telegram
+                    </a>
+                    <a href="mailto:diaawork31@gmail.com" target="_blank" class="social-link">
+                        <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                        <span data-en="Email" data-ar="إيميل">Email</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="footer">
+                diaasanocy.me
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== CV PAGE ===== -->
+    <div id="cv-page">
+        <div class="cv-content">
+            <div class="cv-top-bar">
+                <button class="back-btn" onclick="showHome()">
+                    <span id="backArrow">←</span> <span data-en="Back to Home" data-ar="العودة للرئيسية">Back to Home</span>
+                </button>
+                <button class="lang-toggle-btn" id="langToggleBtn" onclick="toggleLang()">العربية</button>
+            </div>
+
+            <div class="cv-header">
+                <h1>Diaa Sanocy</h1>
+                <span class="cv-title" data-en="Senior Accountant & Inventory Manager" data-ar="محاسب أول ومسؤول مخازن">Senior Accountant & Inventory Manager</span>
+                <div class="geo-divider"></div>
+            </div>
+
+            <div class="cv-section">
+                <h3 class="cv-section-title" data-en="Professional Summary" data-ar="الملخص المهني">Professional Summary</h3>
+                <div class="cv-item cv-item-plain">
+                    <p data-en="Results-driven accountant with 2+ years in cost accounting and inventory management. Expert in warehouse operations, cost analysis, and ERP systems." data-ar="محاسب ذو كفاءة عالية وخبرة تزيد عن عامين في المحاسبة التكاليفية وإدارة المخزون، ولديه خبرة متخصصة في عمليات المخازن وتحليل التكاليف وأنظمة تخطيط موارد المؤسسات (ERP).">
+                        Results-driven accountant with 2+ years in cost accounting and inventory management. 
+                        Expert in warehouse operations, cost analysis, and ERP systems.
+                    </p>
+                </div>
+            </div>
+
+            <div class="cv-section">
+                <h3 class="cv-section-title" data-en="Work Experience" data-ar="الخبرات العملية">Work Experience</h3>
+
+                <div class="cv-item">
+                    <h4 data-en="Senior Accountant & Store Manager" data-ar="محاسب أول ومسؤول مخزن">Senior Accountant & Store Manager</h4>
+                    <span class="cv-date" data-en="2024 — Present" data-ar="2024 — حتى الآن">2024 — Present</span>
+                    <p data-en="Oversee cost accounting, inventory valuation, and warehouse management. Lead a team of 5 and maintain accurate stock tracking." data-ar="الإشراف على المحاسبة التكاليفية وتقييم المخزون وإدارة المخازن، وقيادة فريق مكوّن من 5 أفراد، مع الحفاظ على دقة تتبع المخزون.">
+                        Oversee cost accounting, inventory valuation, and warehouse management. 
+                        Lead a team of 5 and maintain accurate stock tracking.
+                    </p>
+                </div>
+
+                <div class="cv-item">
+                    <h4 data-en="Cost Accountant" data-ar="محاسب تكاليف">Cost Accountant</h4>
+                    <span class="cv-date" data-en="2023 — 2024" data-ar="2023 — 2024">2023 — 2024</span>
+                    <p data-en="Cost analysis and budgeting. Cost reporting, variance analysis, and process optimization." data-ar="تحليل التكاليف وإعداد الموازنات، وإعداد التقارير المالية، وتحليل الانحرافات، وتحسين العمليات.">
+                        Cost analysis and budgeting. Cost reporting, variance analysis, 
+                        and process optimization.
+                    </p>
+                </div>
+            </div>
+
+            <div class="cv-section">
+                <h3 class="cv-section-title" data-en="Core Competencies" data-ar="المهارات الأساسية">Core Competencies</h3>
+                <div class="cv-skills">
+                    <span class="cv-skill" data-en="Cost Accounting" data-ar="المحاسبة التكاليفية">Cost Accounting</span>
+                    <span class="cv-skill" data-en="Inventory Management" data-ar="إدارة المخزون">Inventory Management</span>
+                    <span class="cv-skill" data-en="Warehouse Operations" data-ar="عمليات المخازن">Warehouse Operations</span>
+                    <span class="cv-skill" data-en="Financial Reporting" data-ar="إعداد التقارير المالية">Financial Reporting</span>
+                    <span class="cv-skill" data-en="Budgeting & Forecasting" data-ar="إعداد الموازنات والتنبؤ">Budgeting & Forecasting</span>
+                    <span class="cv-skill" data-en="Variance Analysis" data-ar="تحليل الانحرافات">Variance Analysis</span>
+                    <span class="cv-skill" data-en="ERP Systems" data-ar="أنظمة ERP">ERP Systems</span>
+                    <span class="cv-skill" data-en="Stock Control" data-ar="مراقبة المخزون">Stock Control</span>
+                    <span class="cv-skill" data-en="Audit Preparation" data-ar="التحضير للمراجعة">Audit Preparation</span>
+                    
+                </div>
+            </div>
+
+            <div class="cv-section">
+                <h3 class="cv-section-title" data-en="Technical Skills" data-ar="المهارات التقنية">Technical Skills</h3>
+                <div class="cv-item cv-item-plain">
+                    <p data-en="QuickBooks · SAP · Oracle ERP · Microsoft Dynamics · Tally · Power BI · SQL · Financial Modeling · IFRS · GAAP" data-ar="QuickBooks · SAP · Oracle ERP · Microsoft Dynamics · Tally · Power BI · SQL · النمذجة المالية · IFRS · GAAP">
+                        QuickBooks · SAP · Oracle ERP · Microsoft Dynamics · Tally · 
+                        Power BI · SQL · Financial Modeling · IFRS · GAAP
+                    </p>
+                </div>
+            </div>
+
+            <div class="cv-section">
+                <h3 class="cv-section-title" data-en="Education" data-ar="التعليم">Education</h3>
+                <div class="cv-item">
+                    <h4 data-en="Bachelor of Commerce — Accounting" data-ar="بكالوريوس تجارة — محاسبة">Bachelor of Commerce — Accounting</h4>
+                    <span class="cv-date" data-en="2019 — 2023" data-ar="2019 — 2023">2019 — 2023</span>
+                    <p data-en="Financial accounting, managerial accounting, and business law." data-ar="المحاسبة المالية، والمحاسبة الإدارية، وقانون الأعمال.">
+                        Financial accounting, managerial accounting, and business law.
+                    </p>
+                </div>
+            </div>
+
+            <div class="cv-section">
+                <h3 class="cv-section-title" data-en="Certifications" data-ar="الشهادات">Certifications</h3>
+                <div class="cv-item cv-item-plain">
+                    <p data-en="IFRS Certified · PFA (Professional Financial Accountant)" data-ar="شهادة IFRS · محاسب مالي محترف (PFA)">
+                        IFRS Certified · PFA (Professional Financial Accountant)
+                    </p>
+                </div>
+            </div>
+
+            <div class="footer" style="margin-top: 60px;" data-en="diaasanocy.me · Professional Portfolio" data-ar="diaasanocy.me · ملف أعمال احترافي">
+                diaasanocy.me · Professional Portfolio
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== AUDIO CONTROL ===== -->
+    <div class="audio-control-wrapper">
+        <button class="audio-btn" id="audioBtn">♪</button>
+        <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="30">
+        <span class="volume-value" id="volumeValue">30%</span>
+    </div>
+
+    <script>
+        const landing = document.getElementById('landing');
+        const main = document.getElementById('main');
+        const cvPage = document.getElementById('cv-page');
+        const bgVideo = document.getElementById('bgVideo');
+        const audioBtn = document.getElementById('audioBtn');
+        const volumeSlider = document.getElementById('volumeSlider');
+        const volumeValue = document.getElementById('volumeValue');
+        let isPlaying = false;
+
+        // Landing click / keyboard
+        function enterSite() {
+            landing.classList.add('hidden');
+            main.classList.add('visible');
+
+            bgVideo.volume = 0.3;
+            bgVideo.play().then(() => {
+                isPlaying = true;
+                audioBtn.textContent = '♫';
+            }).catch(() => {
+                isPlaying = false;
+                bgVideo.muted = true;
+                bgVideo.play();
+                audioBtn.textContent = '♪';
+            });
+        }
+        landing.addEventListener('click', enterSite);
+        landing.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                enterSite();
+            }
+        });
+
+        // Show CV page
+        function showCV() {
+            main.style.display = 'none';
+            cvPage.style.display = 'block';
+            setTimeout(() => cvPage.classList.add('active'), 10);
+            window.scrollTo(0, 0);
+        }
+
+        // Show Home page
+        function showHome() {
+            cvPage.classList.remove('active');
+            setTimeout(() => {
+                cvPage.style.display = 'none';
+                main.style.display = 'block';
+            }, 300);
+            window.scrollTo(0, 0);
+        }
+
+        // Audio toggle
+        audioBtn.addEventListener('click', () => {
+            if (isPlaying) {
+                bgVideo.muted = true;
+                audioBtn.textContent = '♪';
+            } else {
+                bgVideo.muted = false;
+                audioBtn.textContent = '♫';
+            }
+            isPlaying = !isPlaying;
+        });
+
+        // Volume slider
+        volumeSlider.addEventListener('input', (e) => {
+            const val = e.target.value;
+            bgVideo.volume = val / 100;
+            volumeValue.textContent = val + '%';
+            if (val > 0 && bgVideo.muted) {
+                bgVideo.muted = false;
+                isPlaying = true;
+                audioBtn.textContent = '♫';
+            }
+        });
+
+        // Arabic / English site-wide toggle
+        let siteLang = 'en';
+        const langToggleBtn = document.getElementById('langToggleBtn');
+        const homeLangToggleBtn = document.getElementById('homeLangToggleBtn');
+        const backArrow = document.getElementById('backArrow');
+        function toggleLang() {
+            siteLang = siteLang === 'en' ? 'ar' : 'en';
+            const isAr = siteLang === 'ar';
+            [main, cvPage].forEach((page) => {
+                page.classList.toggle('lang-ar', isAr);
+                page.setAttribute('dir', isAr ? 'rtl' : 'ltr');
+            });
+            document.querySelectorAll('[data-en]').forEach((el) => {
+                el.textContent = isAr ? el.dataset.ar : el.dataset.en;
+            });
+            backArrow.textContent = isAr ? '→' : '←';
+            const label = isAr ? 'English' : 'العربية';
+            langToggleBtn.textContent = label;
+            homeLangToggleBtn.textContent = label;
+            sizeBioCarousel();
+        }
+
+        // CV scroll-reveal
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+        document.querySelectorAll('.cv-section').forEach((section) => revealObserver.observe(section));
+
+        // Bio quote carousel — auto-rotates every 7s
+        const bioCarousel = document.getElementById('bioCarousel');
+        const bioSlides = document.querySelectorAll('#bioCarousel .bio-slide');
+        const bioDots = document.querySelectorAll('#bioDots .bio-dot');
+        let bioIndex = 0;
+
+        function sizeBioCarousel() {
+            if (!bioCarousel) return;
+            let maxHeight = 0;
+            bioSlides.forEach((slide) => {
+                const wasActive = slide.classList.contains('active');
+                slide.style.position = 'static';
+                if (!wasActive) slide.style.opacity = '0';
+                const h = slide.getBoundingClientRect().height;
+                if (h > maxHeight) maxHeight = h;
+                slide.style.position = '';
+                if (!wasActive) slide.style.opacity = '';
+            });
+            bioCarousel.style.minHeight = maxHeight + 'px';
+        }
+
+        function goToBioSlide(index) {
+            bioSlides[bioIndex].classList.remove('active');
+            if (bioDots[bioIndex]) bioDots[bioIndex].classList.remove('active');
+            bioIndex = index;
+            bioSlides[bioIndex].classList.add('active');
+            if (bioDots[bioIndex]) bioDots[bioIndex].classList.add('active');
+        }
+
+        if (bioSlides.length > 1) {
+            setInterval(() => {
+                goToBioSlide((bioIndex + 1) % bioSlides.length);
+            }, 7000);
+        }
+
+        sizeBioCarousel();
+        window.addEventListener('resize', () => {
+            clearTimeout(window._bioResizeTimer);
+            window._bioResizeTimer = setTimeout(sizeBioCarousel, 150);
+        });
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(sizeBioCarousel);
+        }
+    </script>
+
+</body>
+</html>
