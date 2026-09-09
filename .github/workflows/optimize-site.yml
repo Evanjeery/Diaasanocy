@@ -8,6 +8,7 @@ on:
       - 'bg.mp4'
       - 'index.html'
       - 'scripts/polish_site.py'
+      - 'scripts/premium_polish.py'
       - '.github/workflows/optimize-site.yml'
 
 permissions:
@@ -33,7 +34,9 @@ jobs:
           ffmpeg -y -i bg.mp4 -vf "scale='min(1280,iw)':-2" -frames:v 1 -q:v 3 bg-poster.jpg
 
       - name: Polish HTML
-        run: python3 scripts/polish_site.py
+        run: |
+          python3 scripts/polish_site.py
+          python3 scripts/premium_polish.py
 
       - name: Commit optimized assets
         run: |
@@ -44,5 +47,5 @@ jobs:
             echo "No changes to commit"
             exit 0
           fi
-          git commit -m "Polish responsive portfolio and mobile video [skip ci]"
+          git commit -m "Upgrade premium portfolio experience [skip ci]"
           git push
