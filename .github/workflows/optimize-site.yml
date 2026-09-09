@@ -1,0 +1,84 @@
+name: Optimize site video
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'bg.mp4'
+      - '.github/workflows/optimize-site.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  optimize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install ffmpeg
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+
+      - name: Generate optimized video assets
+        run: |
+          test -f bg.mp4
+          ffmpeg -y -i bg.mp4 -vf "scale='min(1280,iw)':-2,fps=24" -c:v libx264 -preset medium -crf 29 -c:a aac -b:a 96k -movflags +faststart bg-optimized.mp4
+          ffmpeg -y -i bg.mp4 -vf "scale='min(1280,iw)':-2,fps=24" -c:v libvpx-vp9 -crf 36 -b:v 0 -c:a libopus -b:a 64k bg-optimized.webm
+          ffmpeg -y -i bg.mp4 -vf "scale='min(1280,iw)':-2" -frames:v 1 -q:v 3 bg-poster.jpg
+
+      - name: Improve video loading in index.html
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+
+          video = '''    <!-- Background Video -->
+              <video class="bg-video" id="bgVideo" autoplay muted loop playsinline preload="auto" poster="bg-poster.jpg" aria-hidden="true">
+                  <source src="bg-optimized.webm" type="video/webm">
+                  <source src="bg-optimized.mp4" type="video/mp4">
+                  <source src="bg.mp4" type="video/mp4">
+              </video>'''
+
+          s, n = re.subn(r'    <!-- Background Video -->\s*<video[^>]*id="bgVideo"[\s\S]*?</video>', video, s, count=1)
+          if n != 1:
+              raise SystemExit('Background video block was not found')
+
+          if 'rel="canonical"' not in s:
+              s = s.replace('    <meta name="description"', '    <link rel="canonical" href="https://diaasanocy.me/">\n    <meta name="theme-color" content="#0a0a0a">\n    <meta name="robots" content="index,follow">\n    <meta name="description"', 1)
+
+          enhancement = '''
+
+          // Performance enhancement: use the optimized assets and avoid decoding video in hidden tabs.
+          bgVideo.muted = true;
+          bgVideo.setAttribute('preload', 'auto');
+          bgVideo.addEventListener('loadeddata', () => bgVideo.classList.add('ready'), { once: true });
+          document.addEventListener('visibilitychange', () => {
+              if (document.hidden) {
+                  bgVideo.pause();
+              } else if (main.classList.contains('visible')) {
+                  bgVideo.play().catch(() => {});
+              }
+          });
+          '''
+
+          if 'Performance enhancement: use the optimized assets' not in s:
+              s = s.replace('</script>', enhancement + '\n    </script>', 1)
+
+          p.write_text(s, encoding='utf-8')
+          PY
+
+      - name: Commit optimized assets
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html bg-optimized.mp4 bg-optimized.webm bg-poster.jpg
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "Optimize background video and site loading [skip ci]"
+          git push
