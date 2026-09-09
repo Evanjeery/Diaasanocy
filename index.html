@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Diaa Sanocy</title>
+    <link rel="canonical" href="https://diaasanocy.me/">
+    <meta name="theme-color" content="#0a0a0a">
+    <meta name="robots" content="index,follow">
     <meta name="description" content="Diaa Sanocy — Accountant &amp; Inventory Manager. Personal portfolio and CV.">
     <meta property="og:title" content="Diaa Sanocy">
     <meta property="og:description" content="Accountant &amp; Inventory Manager — personal portfolio and CV.">
@@ -758,7 +761,9 @@
     </div>
 
     <!-- Background Video -->
-    <video class="bg-video" id="bgVideo" autoplay loop playsinline>
+    <video class="bg-video" id="bgVideo" autoplay muted loop playsinline preload="auto" poster="bg-poster.jpg" aria-hidden="true">
+        <source src="bg-optimized.webm" type="video/webm">
+        <source src="bg-optimized.mp4" type="video/mp4">
         <source src="bg.mp4" type="video/mp4">
     </video>
     <div class="bg-overlay"></div>
@@ -1098,6 +1103,20 @@
         if (document.fonts && document.fonts.ready) {
             document.fonts.ready.then(sizeBioCarousel);
         }
+    
+
+// Performance enhancement: use the optimized assets and avoid decoding video in hidden tabs.
+bgVideo.muted = true;
+bgVideo.setAttribute('preload', 'auto');
+bgVideo.addEventListener('loadeddata', () => bgVideo.classList.add('ready'), { once: true });
+document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+        bgVideo.pause();
+    } else if (main.classList.contains('visible')) {
+        bgVideo.play().catch(() => {});
+    }
+});
+
     </script>
 
 </body>
