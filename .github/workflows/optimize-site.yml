@@ -9,6 +9,7 @@ on:
       - 'index.html'
       - 'scripts/polish_site.py'
       - 'scripts/premium_polish.py'
+      - 'scripts/cleanup_site.py'
       - '.github/workflows/optimize-site.yml'
 
 permissions:
@@ -37,6 +38,7 @@ jobs:
         run: |
           python3 scripts/polish_site.py
           python3 scripts/premium_polish.py
+          python3 scripts/cleanup_site.py
 
       - name: Commit optimized assets
         run: |
@@ -47,5 +49,5 @@ jobs:
             echo "No changes to commit"
             exit 0
           fi
-          git commit -m "Upgrade premium portfolio experience [skip ci]"
+          git commit -m "Clean portfolio UI and fix CV controls [skip ci]"
           git push
