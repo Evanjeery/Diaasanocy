@@ -58,13 +58,32 @@ else:
 # Keep only one PDF action even if an earlier malformed version exists elsewhere.
 pdf_matches = list(re.finditer(r'<button[^>]*onclick="window\.print\(\)"[^>]*>PDF</button>', s))
 if len(pdf_matches) > 1:
-    first = pdf_matches[0]
     for match in reversed(pdf_matches[1:]):
         s = s[:match.start()] + s[match.end():]
+
+# Remove any wording specifically referring to main stores / main warehouse operations.
+for phrase in [
+    'Main Stores', 'Main Store', 'Main Warehouse', 'Main Warehouses',
+    'المخازن الرئيسية', 'المخزن الرئيسي', 'المخازن الرئيسيه', 'المخزن الرئيسى'
+]:
+    s = s.replace(phrase, '')
+
+# The video starts muted for browser autoplay. The landing click is a user gesture,
+# so explicitly unmute there and make the audio button/slider control the video audio.
+s = s.replace(
+    "bgVideo.volume=.3;bgVideo.play().then(()=>{isPlaying=true;audioBtn.textContent='♫'}).catch(()=>{isPlaying=false;bgVideo.muted=true;bgVideo.play();audioBtn.textContent='♪'})",
+    "bgVideo.volume=Number(volumeSlider.value)/100;bgVideo.muted=false;bgVideo.play().then(()=>{isPlaying=true;audioBtn.textContent='♫'}).catch(()=>{isPlaying=false;bgVideo.muted=true;audioBtn.textContent='♪'})"
+)
+
+# Add reliable audio controls if the current page does not already wire them.
+if 'audioBtn.addEventListener' not in s:
+    marker = "function showCV(){"
+    audio_js = "audioBtn.addEventListener('click',()=>{bgVideo.muted=!bgVideo.muted;isPlaying=!bgVideo.muted;audioBtn.textContent=bgVideo.muted?'♪':'♫';if(!bgVideo.muted)bgVideo.play().catch(()=>{})});volumeSlider.addEventListener('input',()=>{bgVideo.volume=Number(volumeSlider.value)/100;volumeValue.textContent=volumeSlider.value+'%';if(Number(volumeSlider.value)>0){bgVideo.muted=false;isPlaying=true;audioBtn.textContent='♫';bgVideo.play().catch(()=>{})}});"
+    s = s.replace(marker, audio_js + marker, 1)
 
 # No custom domain should remain anywhere in the page.
 if 'diaasanocy.me' in s:
     raise SystemExit('Stale custom-domain reference remains in index.html')
 
 p.write_text(s, encoding='utf-8')
-print('site cleanup completed: one PDF control, clean CV, no stale domain')
+print('site cleanup completed: one PDF control, clean CV, no stale domain, working video audio')
