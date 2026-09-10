@@ -6,6 +6,8 @@ on:
       - main
     paths:
       - 'bg.mp4'
+      - 'index.html'
+      - 'scripts/cleanup_site.py'
       - '.github/workflows/optimize-site.yml'
 
 permissions:
@@ -30,14 +32,17 @@ jobs:
           ffmpeg -y -i bg.mp4 -vf "scale='min(720,iw)':-2,fps=20" -c:v libvpx-vp9 -crf 40 -b:v 0 -c:a libopus -b:a 48k bg-mobile.webm
           ffmpeg -y -i bg.mp4 -vf "scale='min(1280,iw)':-2" -frames:v 1 -q:v 3 bg-poster.jpg
 
-      - name: Commit optimized assets
+      - name: Finalize HTML and audio controls
+        run: python3 scripts/cleanup_site.py
+
+      - name: Commit optimized assets and final HTML
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add bg-optimized.mp4 bg-optimized.webm bg-mobile.mp4 bg-mobile.webm bg-poster.jpg
+          git add bg-optimized.mp4 bg-optimized.webm bg-mobile.mp4 bg-mobile.webm bg-poster.jpg index.html
           if git diff --cached --quiet; then
             echo "No changes to commit"
             exit 0
           fi
-          git commit -m "Optimize portfolio video assets [skip ci]"
+          git commit -m "Finalize portfolio site and audio [skip ci]"
           git push
